@@ -23,9 +23,11 @@ export const GrayButtonWrapper = styled.button`
     border-radius: 10px;
     background-color: #F7F9FA;
     border: none;
+    margin-right: 15px;
 `
 
 export const ButtonCreateNew = styled.button`
+    color: #367BF5;
     font-size: 20px;
     font-weight: 500;
     height: 56px;
@@ -34,4 +36,6 @@ export const ButtonCreateNew = styled.button`
     top: 0px;
     border-radius: 99px;
     border: none;
+    background: #FFFFFF;
+    box-shadow: 0px 16px 24px rgba(54, 123, 245, 0.16), 0px 6px 12px rgba(54, 123, 245, 0.16);
 `

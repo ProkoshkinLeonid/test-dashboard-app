@@ -1,73 +1,104 @@
 import { useEffect, useState } from "react";
-import { DefaultTableColumn, DefaultTableRow, MainTableColumn, TableItemSearch, TableSearch, TableTitleWrapper } from "./Table.styled"
+import { 
+    DefaultTableColumn, 
+    DefaultTableRow, 
+    MainTableColumn, 
+    MaintTableRow, 
+    TableItemSearch, 
+    TableSearch, 
+    TableTitleWrapper } from "./Table.styled"
 
 export const Table = () => {
 
     const [data, setData] = useState([])
+    const [filteredData, setFilteredData] = useState([])
     const [filter, setFilter] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
-    const generateData = (s) => {
+    const getData = (length) => {
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
         }
-        let id = 0
-
-        return Array.from({ length: s }, () => {
-            return { id: id++, Summary1: getRandomInt(999), Summary2: getRandomInt(999), Summary3: getRandomInt(999), Summary4: getRandomInt(999), Summary5: getRandomInt(999)}
-        });
+        let id = 1
+        setIsLoading(true)
+        setTimeout(() => setData(Array.from({ length }, () => {
+            setIsLoading(false)
+            return { 
+                id: id++, 
+                Summary1: getRandomInt(999), 
+                Summary2: getRandomInt(999), 
+                Summary3: getRandomInt(999), 
+                Summary4: getRandomInt(999), 
+                Summary5: getRandomInt(999)}
+        })), 3000)
     }
 
-    const onFilterDataHandler = (e) => {
+    const allFilterDataHandler = (e) => {
+       setTimeout(() => {
         setFilter(e.target.value)
+        if(e.target.value) {
+                const newData = data.filter(num => (num.Summary1 || num.Summary2 || num.Summary3 || num.Summary4 || num.Summary5)  === +e.target.value)
+                setIsLoading(true)
+                setTimeout(() => {
+                    setFilteredData(newData)
+                    setIsLoading(false)
+                }, 1500)
+            }
+        }, 1300)
     }
 
     useEffect(() => {
-        setData(generateData(4))
+        getData(4)
     }, [])
 
-    console.log(filter);
+    useEffect(() => {
+        if (!filter && !isLoading) {
+            setFilteredData(data)
+        }
+    }, [filter, data, isLoading])
 
     return <div>
         <TableTitleWrapper>Dashboard</TableTitleWrapper>
         <table>
             <thead>
-            <MainTableColumn>Data</MainTableColumn>
-            <DefaultTableColumn>Summary1</DefaultTableColumn>
-            <DefaultTableColumn>Summary2</DefaultTableColumn>
-            <DefaultTableColumn>Summary3</DefaultTableColumn>
-            <DefaultTableColumn>Summary4</DefaultTableColumn>
-            <DefaultTableColumn>Summary5</DefaultTableColumn>
+                <MainTableColumn>Data</MainTableColumn>
+                <DefaultTableColumn>Summary1</DefaultTableColumn>
+                <DefaultTableColumn>Summary2</DefaultTableColumn>
+                <DefaultTableColumn>Summary3</DefaultTableColumn>
+                <DefaultTableColumn>Summary4</DefaultTableColumn>
+                <DefaultTableColumn>Summary5</DefaultTableColumn>
             </thead>
             <tbody>
-            {data.map(item => (
-                    <tr>
-                    <td>{item.id}</td>
-                    <DefaultTableRow>{item.Summary1}</DefaultTableRow>
-                    <DefaultTableRow>{item.Summary2}</DefaultTableRow>
-                    <DefaultTableRow>{item.Summary3}</DefaultTableRow>
-                    <DefaultTableRow>{item.Summary4}</DefaultTableRow>
-                    <DefaultTableRow>{item.Summary5}</DefaultTableRow>
-                    </tr>
-                ))}
-        </tbody>
-        <tfoot>
-        <th><TableSearch type={'number'} onChange={(e) => onFilterDataHandler(e)} placeholder="search..."/></th>
-        <DefaultTableRow>
-            <TableItemSearch/>
-        </DefaultTableRow>
-        <DefaultTableColumn>
-            <TableItemSearch/>
-        </DefaultTableColumn>
-        <DefaultTableColumn>
-            <TableItemSearch/>
-        </DefaultTableColumn>
-        <DefaultTableColumn>
-            <TableItemSearch/>
-        </DefaultTableColumn>
-        <DefaultTableColumn>
-            <TableItemSearch/>
-        </DefaultTableColumn>
-        </tfoot>
+                {(!filteredData.length && !!filter && !isLoading) && <div>Ничего не нашли:(</div>}
+                {isLoading ? <div>Идёт загрузка данных...</div> : filteredData.map(item => (
+                        <tr>
+                        <MaintTableRow>Data{item.id}</MaintTableRow>
+                        <DefaultTableRow>{item.Summary1}</DefaultTableRow>
+                        <DefaultTableRow>{item.Summary2}</DefaultTableRow>
+                        <DefaultTableRow>{item.Summary3}</DefaultTableRow>
+                        <DefaultTableRow>{item.Summary4}</DefaultTableRow>
+                        <DefaultTableRow>{item.Summary5}</DefaultTableRow>
+                        </tr>
+                    ))}
+            </tbody>
+            <tfoot>
+                <th><TableSearch disabled={isLoading} type={'number'} onChange={(e) => allFilterDataHandler(e)} placeholder="Search..."/></th>
+                <DefaultTableRow onChange={(e) => allFilterDataHandler(e)}>
+                    <TableItemSearch/>
+                </DefaultTableRow>
+                <DefaultTableColumn>
+                    <TableItemSearch/>
+                </DefaultTableColumn>
+                <DefaultTableColumn>
+                    <TableItemSearch/>
+                </DefaultTableColumn>
+                <DefaultTableColumn>
+                    <TableItemSearch/>
+                </DefaultTableColumn>
+                <DefaultTableColumn>
+                    <TableItemSearch/>
+                </DefaultTableColumn>
+            </tfoot>
         </table>
     </div>
 }

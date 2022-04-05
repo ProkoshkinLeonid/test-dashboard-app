@@ -35,6 +35,15 @@ export const DefaultTableColumn = styled.th`
     height: 64px;
     text-align: right;
 `
+
+export const MaintTableRow = styled.td`
+    color: #000000DE;
+    text-align: left;
+    height: 64px;
+    font-size: 20px;
+    font-weight: 500;
+` 
+
 export const DefaultTableRow = styled.td`
     text-align: right;
     height: 64px;
