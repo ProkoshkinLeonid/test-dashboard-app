@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { DefaultTableColumn, MainTableColumn, TableSearch, TableTitleWrapper } from "./Table.styled"
+import { DefaultTableColumn, DefaultTableRow, MainTableColumn, TableItemSearch, TableSearch, TableTitleWrapper } from "./Table.styled"
 
 export const Table = () => {
 
     const [data, setData] = useState([])
+    const [filter, setFilter] = useState(null)
 
     const generateData = (s) => {
         function getRandomInt(max) {
@@ -16,9 +17,15 @@ export const Table = () => {
         });
     }
 
+    const onFilterDataHandler = (e) => {
+        setFilter(e.target.value)
+    }
+
     useEffect(() => {
-        setData(generateData(6))
+        setData(generateData(4))
     }, [])
+
+    console.log(filter);
 
     return <div>
         <TableTitleWrapper>Dashboard</TableTitleWrapper>
@@ -35,15 +42,32 @@ export const Table = () => {
             {data.map(item => (
                     <tr>
                     <td>{item.id}</td>
-                    <td>{item.Summary1}</td>
-                    <td>{item.Summary2}</td>
-                    <td>{item.Summary3}</td>
-                    <td>{item.Summary4}</td>
-                    <td>{item.Summary5}</td>
+                    <DefaultTableRow>{item.Summary1}</DefaultTableRow>
+                    <DefaultTableRow>{item.Summary2}</DefaultTableRow>
+                    <DefaultTableRow>{item.Summary3}</DefaultTableRow>
+                    <DefaultTableRow>{item.Summary4}</DefaultTableRow>
+                    <DefaultTableRow>{item.Summary5}</DefaultTableRow>
                     </tr>
                 ))}
         </tbody>
+        <tfoot>
+        <th><TableSearch type={'number'} onChange={(e) => onFilterDataHandler(e)} placeholder="search..."/></th>
+        <DefaultTableRow>
+            <TableItemSearch/>
+        </DefaultTableRow>
+        <DefaultTableColumn>
+            <TableItemSearch/>
+        </DefaultTableColumn>
+        <DefaultTableColumn>
+            <TableItemSearch/>
+        </DefaultTableColumn>
+        <DefaultTableColumn>
+            <TableItemSearch/>
+        </DefaultTableColumn>
+        <DefaultTableColumn>
+            <TableItemSearch/>
+        </DefaultTableColumn>
+        </tfoot>
         </table>
-        <TableSearch placeholder="search..."/>
     </div>
 }
