@@ -4,13 +4,14 @@ import {
     DefaultTableRow, 
     MainTableColumn, 
     MaintTableRow, 
+    TableContainer, 
     TableItemSearch, 
     TableSearch, 
     TableTitleWrapper } from "./Table.styled"
 
 export const Table = ({filterByDataId, isLoading, filter, filteredData, allFilterDataHandler}) => {
 
-    return <div>
+    return <TableContainer>
         <TableTitleWrapper>Dashboard</TableTitleWrapper>
         <table>
             <thead>
@@ -53,5 +54,5 @@ export const Table = ({filterByDataId, isLoading, filter, filteredData, allFilte
                 </DefaultTableColumn>
             </tfoot>
         </table>
-    </div>
+    </TableContainer>
 }

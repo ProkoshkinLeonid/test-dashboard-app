@@ -1,5 +1,10 @@
 import styled from 'styled-components'
 
+
+export const TableContainer = styled.div`
+    padding-right: 120px
+`
+
 export const TableTitleWrapper = styled.div`
     font-size: 34px;
 `
@@ -45,6 +50,8 @@ export const MaintTableRow = styled.td`
 ` 
 
 export const DefaultTableRow = styled.td`
+    font-size: 20px;
+    font-weight: 500;
     text-align: right;
     height: 64px;
 `

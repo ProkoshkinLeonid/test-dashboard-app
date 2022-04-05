@@ -5,10 +5,8 @@ import { FilterButtonContainer, FilterWrapper, RightbarContainer } from "./Right
 export const Rightbar = () => {
     return <RightbarContainer>
         <Button Wrapper={ButtonCreateNew} title='Create New'/>
-        <FilterButtonContainer>
-            <FilterWrapper>Even rows of data</FilterWrapper>
-            <FilterWrapper>Odd rows of data</FilterWrapper>
-            <FilterWrapper>All data</FilterWrapper>
-        </FilterButtonContainer>
+        <Button Wrapper={FilterWrapper} title='Even rows of data'/> 
+        <Button Wrapper={FilterWrapper} title='Odd rows of data'/>
+        <Button Wrapper={FilterWrapper} title='All data'/>
     </RightbarContainer>
 }

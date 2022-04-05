@@ -4,6 +4,7 @@ export const NavbarContainer = styled.div`
     display: flex;
     height: 56px;
     justify-content: center;
+    padding-right: 400px;
 `
 
 export const NavbarItem = styled.div`
