@@ -7,8 +7,12 @@ export const NavbarContainer = styled.div`
 `
 
 export const NavbarItem = styled.div`
+    border-top: ${props => (props.isSelected ? `1px solid #C6CACC;` : `none`)};
+    border-right: ${props => (props.isSelected ? `1px solid #C6CACC;` : `none`)};
+    border-left: ${props => (props.isSelected ? `1px solid #C6CACC;` : `none`)};
     min-width: 97px;
     max-height: 56px;
+    line-height: 30px;
     border-radius: 4px 4px 0px 0px;
     padding: 10px;
     font-size: 16px;

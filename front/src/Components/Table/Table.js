@@ -47,6 +47,16 @@ export const Table = () => {
         }, 1300)
     }
 
+    const filterByDataId = () => {
+        if (filteredData[0].id > filteredData[1].id) {
+            setFilteredData(prevState => [...prevState.sort((a,b) => a.id-b.id)])
+        } else {
+            setFilteredData(prevState => [...prevState.sort((a,b) => b.id-a.id)])
+        }
+    }
+
+    console.log(filteredData);
+
     useEffect(() => {
         getData(4)
     }, [])
@@ -61,7 +71,7 @@ export const Table = () => {
         <TableTitleWrapper>Dashboard</TableTitleWrapper>
         <table>
             <thead>
-                <MainTableColumn>Data</MainTableColumn>
+                <MainTableColumn onClick={filterByDataId}>Data</MainTableColumn>
                 <DefaultTableColumn>Summary1</DefaultTableColumn>
                 <DefaultTableColumn>Summary2</DefaultTableColumn>
                 <DefaultTableColumn>Summary3</DefaultTableColumn>

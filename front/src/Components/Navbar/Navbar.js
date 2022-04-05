@@ -1,6 +1,8 @@
+import { useState } from "react";
 import {
   Link
 } from "react-router-dom";
+import { TABS } from "../../helpers/constants";
 import { NavbarContainer, NavbarItem } from "./Navbar.styled"
 
 const linkStyle = {
@@ -11,19 +13,22 @@ const linkStyle = {
 
 
 export const Navbar = () => {
+
+    const [activeTab, setActiveTab] = useState(TABS.ANALYZE)
+
     return <NavbarContainer>
-        <NavbarItem>
-            <Link style={linkStyle} to='/'>
+        <NavbarItem isSelected = {activeTab === TABS.ANALYZE}>
+            <Link onClick={() => setActiveTab(TABS.ANALYZE)} style={linkStyle} to='/'>
                 Analyze
             </Link>
         </NavbarItem>
         <NavbarItem>
-            <Link style={linkStyle} to='/analyze'>
+            <Link onClick={() => setActiveTab(TABS.MY_CAMPAIGNS)} style={linkStyle} to='/analyze'>
                 My campagains
             </Link>
         </NavbarItem>
         <NavbarItem>
-            <Link style={linkStyle} to='/analyze'>
+            <Link onClick={() => setActiveTab(TABS.CONFIGURE)} style={linkStyle} to='/analyze'>
                Configure
             </Link>
         </NavbarItem>
