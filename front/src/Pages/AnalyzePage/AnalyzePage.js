@@ -8,20 +8,16 @@ import {
   TableSearch,
 } from "../../Components/Table/Table.styled";
 import { AnalyzePageContainer } from "./AnalyzePage.styled";
+import {ACTIVE_FILTER, defaultTableItemModel} from "../../helpers/constants"
 
 export const AnalyzePage = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [filter, setFilter] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [newDataItem, setNewDataItem] = useState({
-    id: null,
-    Summary1: null,
-    Summary2: null,
-    Summary3: null,
-    Summary4: null,
-    Summary5: null,
-  });
+  const [newDataItem, setNewDataItem] = useState(defaultTableItemModel);
+  const [rightFilter, setRightFilter] = useState(ACTIVE_FILTER.ALL_DATA)
+  const [error, setError] = useState('')
 
   const getData = (length) => {
     function getRandomInt(max) {
@@ -69,6 +65,19 @@ export const AnalyzePage = () => {
     }, 1300);
   };
 
+  const setActiveFilter = (filter) => {
+    if (ACTIVE_FILTER.ALL_DATA === filter) {
+        setRightFilter(filter)
+        setFilteredData(data)
+    } else if (ACTIVE_FILTER.EVEN_ROWS_OF_DATA === filter){
+      setRightFilter(filter)
+      setFilteredData(prevState => prevState.filter(s => (s.Summary1 % 2 === 0 && s.Summary2 % 2 === 0 && s.Summary3 % 2 === 0 && s.Summary4 % 2 === 0 && s.Summary5 % 2 === 0)))
+    } else {
+      setRightFilter(filter)
+      setFilteredData(prevState => prevState.filter(s => (s.Summary1 % 3 === 0 && s.Summary2 % 3 === 0 && s.Summary3 % 3 === 0 && s.Summary4 % 3 === 0 && s.Summary5 % 3 === 0)))
+    }
+  }
+
   const filterByDataId = () => {
     if (filteredData[0].id > filteredData[1].id) {
       setFilteredData((prevState) => [
@@ -81,31 +90,35 @@ export const AnalyzePage = () => {
     }
   };
 
+  const isButtonCreateDisabled = Object.values(newDataItem).includes('')
+
   const newDataItemHandler = (e, field) => {
     setNewDataItem((prevState) => ({
       ...prevState,
       [field]: +e.target.value,
     }));
+    if (isButtonCreateDisabled) setError('Заполните все поля для создания строки.')
   };
 
   const createNewItem = () => {
     const id = filteredData[filteredData.length - 1].id + 1;
+    const newItem = {
+          ...newDataItem,
+          id,
+        }
     setFilteredData((prevState) => [
       ...prevState,
-      {
-        ...newDataItem,
-        id,
-      },
-    ]);
-    setNewDataItem({
-      id: null,
-      Summary1: "",
-      Summary2: "",
-      Summary3: "",
-      Summary4: "",
-      Summary5: "",
-    });
+      newItem,
+    ])
+    setData((prevState) => [
+      ...prevState,
+      newItem,
+    ])
+    setNewDataItem(defaultTableItemModel);
+    setError('')
   };
+
+
 
   useEffect(() => {
     getData(8);
@@ -165,8 +178,13 @@ export const AnalyzePage = () => {
 
   return (
     <AnalyzePageContainer>
-      <Rightbar createNewItem={createNewItem} />
+      <Rightbar
+          activeFilter={rightFilter}
+          setActiveFilter={setActiveFilter}
+          isButtonCreateDisabled={isButtonCreateDisabled}
+          createNewItem={createNewItem} />
       <Table
+          error={error}
         footer={footer}
         filterByDataId={filterByDataId}
         filter={filter}

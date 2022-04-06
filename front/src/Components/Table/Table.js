@@ -5,17 +5,15 @@ import {
   MainTableColumn,
   MaintTableRow,
   TableContainer,
-  TableItemSearch,
-  TableSearch,
   TableTitleWrapper,
 } from "./Table.styled";
 
 export const Table = ({
+    error,
   filterByDataId,
   isLoading,
   filter,
   filteredData,
-  allFilterDataHandler,
   footer,
 }) => {
   return (
@@ -39,20 +37,25 @@ export const Table = ({
               <div>Идёт загрузка данных...</div>
             ) : (
               filteredData.map((item) => (
-                <tr>
-                  <MaintTableRow>Data{item.id}</MaintTableRow>
-                  <DefaultTableRow>{item.Summary1}</DefaultTableRow>
-                  <DefaultTableRow>{item.Summary2}</DefaultTableRow>
-                  <DefaultTableRow>{item.Summary3}</DefaultTableRow>
-                  <DefaultTableRow>{item.Summary4}</DefaultTableRow>
-                  <DefaultTableRow>{item.Summary5}</DefaultTableRow>
-                </tr>
+                <>
+                  <tr>
+                    <MaintTableRow>Data{item.id}</MaintTableRow>
+                    <DefaultTableRow>{item.Summary1}</DefaultTableRow>
+                    <DefaultTableRow>{item.Summary2}</DefaultTableRow>
+                    <DefaultTableRow>{item.Summary3}</DefaultTableRow>
+                    <DefaultTableRow>{item.Summary4}</DefaultTableRow>
+                    <DefaultTableRow>{item.Summary5}</DefaultTableRow>
+                  </tr>
+                </>
               ))
             )}
           </tbody>
         </table>
       </TableContainer>
       {footer}
+      {!!error && <div style={{color:'red'}}>
+        {error}
+      </div>}
     </div>
   );
 };
