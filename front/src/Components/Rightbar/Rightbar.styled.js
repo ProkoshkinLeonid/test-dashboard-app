@@ -7,8 +7,7 @@ export const RightbarContainer = styled.div`
 `
 
 export const FilterWrapper = styled.div`
-    height: 42px;
-    left: 52px;
-    top: 7px;
-    border-radius: nullpx;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
 `

@@ -27,6 +27,7 @@ export const GrayButtonWrapper = styled.button`
 `
 
 export const ButtonCreateNew = styled.button`
+    cursor: pointer;
     color: #367BF5;
     font-size: 20px;
     font-weight: 500;

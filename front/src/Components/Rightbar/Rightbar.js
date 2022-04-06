@@ -2,11 +2,19 @@ import { Button } from "../Button/Button"
 import { ButtonCreateNew } from "../Button/Button.styled"
 import { FilterButtonContainer, FilterWrapper, RightbarContainer } from "./Rightbar.styled"
 
-export const Rightbar = () => {
+export const Rightbar = ({createNewItem}) => {
     return <RightbarContainer>
-        <Button Wrapper={ButtonCreateNew} title='Create New'/>
-        <Button Wrapper={FilterWrapper} title='Even rows of data'/> 
-        <Button Wrapper={FilterWrapper} title='Odd rows of data'/>
-        <Button Wrapper={FilterWrapper} title='All data'/>
+        <Button onClick={createNewItem} Wrapper={ButtonCreateNew} title='Create New'/>
+        <FilterWrapper>
+            <button>
+            Even rows of data
+            </button>
+            <button>
+            Odd rows of data
+            </button>
+            <button>
+            All data
+            </button>
+        </FilterWrapper>
     </RightbarContainer>
 }

@@ -2,6 +2,8 @@ import styled from 'styled-components'
 
 
 export const TableContainer = styled.div`
+    flex-grow: 1;
+    overflow: auto;
     padding-right: 120px
 `
 
@@ -9,6 +11,7 @@ export const TableTitleWrapper = styled.div`
     font-size: 34px;
 `
 export const TableSearch = styled.input`
+    margin-right: 50px;
     background: #E2F0F0;
     height: 32px;
     width: 330px;
@@ -29,6 +32,7 @@ export const TableItemSearch = styled.input`
 `
 
 export const MainTableColumn = styled.th`
+    cursor: pointer;
     color: #919699;
     width: 330px;
     text-align: left;
