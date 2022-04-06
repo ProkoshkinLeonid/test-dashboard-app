@@ -1,6 +1,6 @@
 import { Button } from "../Button/Button"
 import { ButtonCreateNew } from "../Button/Button.styled"
-import { FilterButtonContainer, FilterWrapper, RightbarContainer } from "./Rightbar.styled"
+import { FilterWrapper, RightbarContainer } from "./Rightbar.styled"
 
 export const Rightbar = ({createNewItem}) => {
     return <RightbarContainer>
